@@ -1,0 +1,931 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initil-scale=1">
+    <link rel="icon" href="~/Assets/images/favicon.ico" type="image/ico" />
+
+    <title>SmartCoders | Admin </title>
+
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <link href="~/Assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/Assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="~/Assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="~/Assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+    <!-- bootstrap-progressbar -->
+    <link href="~/Assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="~/Assets/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="~/Assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Datatables -->
+    <!--<link href="~/Assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">-->
+    <!-- Custom Theme Style -->
+    <link href="~/Assets/build/css/custom.min.css" rel="stylesheet">
+    <style>
+        .hide-scroll {
+            -ms-overflow-style: none; /* for Internet Explorer, Edge */
+            scrollbar-width: none; /* for Firefox */
+            overflow-y: scroll;
+            overflow-x: scroll;
+        }
+
+        .hide-scroll::-webkit-scrollbar {
+            display: none; /* for Chrome, Safari, and Opera */
+        }
+        .imgZoomDiv {
+            position: absolute;
+            top:0;
+            padding:10px;
+            z-index:1;
+        }
+        .imgZoomDiv, .imgContainer {
+            width: 0%;
+            height: 0vh;
+        }
+        .imgContainer img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 80%;
+        }
+    </style>
+</head>
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container" id="mainContainer">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="#" class="site_title"><i class="fa fa-paw"></i> <span>Smart Coders</span></a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="~/Assets/images/img.jpg" alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2>Admin, Job-Portal</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>General</h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a href=""><i class="fa fa-home"></i>Dashboard</a>
+                                </li>
+                                <li>
+                                    <a href="#" onclick="navigateToJobs()"><i class="fa fa-edit"></i> Jobs <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" id="jobChild">
+                                        <li><a href="#" data-toggle="modal" data-target="#postJobModal">Post a Job</a></li>
+                                        <li><a style="cursor:pointer" onclick="getActiveJobAds()">Active</a></li>
+                                        <li><a style="cursor:pointer" onclick="getJobAdsHistory()">Post History</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#" onclick="navigate()"><i class="fa fa-sitemap"></i> Products <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" id="prodChild">
+                                        <li data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><a href="#">Add product</a>
+                                        <li>
+                                            <a>Categories<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="#">Graphic Designing</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Web Development</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Android</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Ios</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li onclick="getAllProducts()">
+                                            <a style="cursor:pointer">All</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-table"></i>Job Applications <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="tables.html">New<span class="badge bg-red pull-right">50%</span></a></li>
+                                        <li><a href="tables_dynamic.html">History</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="menu_section">
+                            <h3>Live On</h3>
+                            <ul class="nav side-menu">
+                                <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                        <a data-toggle="tooltip" data-placement="top" title="Settings">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Lock">
+                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="/Home/Login">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <nav class="nav navbar-nav">
+                        <ul class=" navbar-right">
+                            <li class="nav-item dropdown open" style="padding-left: 15px;">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="~/Assets/images/img.jpg" alt="">SM-Admin
+                                </a>
+                                <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="javascript:;"> Profile</a>
+                                    <a class="dropdown-item" href="javascript:;">
+                                        <span>Settings</span>
+                                    </a>
+                                    <a class="dropdown-item" href="/Home/Index"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                </div>
+                            </li>
+
+                            <li role="presentation" class="nav-item dropdown open">
+                                <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-envelope-o"></i>
+                                    <span class="badge bg-green">6</span>
+                                </a>
+                                <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
+                                    <li class="nav-item">
+                                        <a class="dropdown-item">
+                                            <span class="image"><img src="~/Assets/images/img.jpg" alt="Profile Image" /></span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item">
+                                            <span class="image"><img src="~/Assets/images/img.jpg" alt="Profile Image" /></span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item">
+                                            <span class="image"><img src="~/Assets/images/img.jpg" alt="Profile Image" /></span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item">
+                                            <span class="image"><img src="~/Assets/images/img.jpg" alt="Profile Image" /></span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <div class="text-center">
+                                            <a class="dropdown-item">
+                                                <strong>See All Alerts</strong>
+                                                <i class="fa fa-angle-right"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            <!-- page content -->
+            @RenderBody()
+            <!-- /page content -->
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    Powered By <a href="https://colorlib.com">Smart-Coders</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+        <div class="modal fade bs-example-modal-lg" id="postJobModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="myModalLabel">Post a new Job Ad !</h6>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Ad details <small>Please fill the details</small></h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#">Settings 1</a>
+                                            <a class="dropdown-item" href="#">Settings 2</a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <br />
+                                <form id="frmPostAd" method="post" class="form-label-left input_mask">
+                                    <div class="col-md-6 col-sm-6  form-group has-feedback">
+                                        <input type="text" class="form-control has-feedback-left" id="jobTitle" placeholder="Job Title">
+                                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6  form-group has-feedback">
+                                        <input type="number" class="form-control" id="nofvacancies" placeholder="No. of Vacancies">
+                                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2 ">Job Timings<span class="required">*</span></label>
+                                        <div class="col-sm-5 form-group has-feedback">
+                                            <small>From</small>
+                                            <div class="form-group">
+                                                <div class="input-group date" id='myDatepicker3'>
+                                                    <input disabled type="text" id="from" class="form-control" value="09:00 AM" />
+                                                    <span class="input-group-addon" style="cursor:pointer">
+                                                        <span class="fa fa-clock-o"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <small>To</small>
+                                            <div class="form-group">
+                                                <div class="input-group date" id="secondmyDatepicker3">
+                                                    <input disabled type='text' id="to" class="form-control" value="05:30 PM" />
+                                                    <span class="input-group-addon" style="cursor:pointer">
+                                                        <span class="fa fa-clock-o"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2 ">Job Type<span class="required">*</span></label>
+                                        <div class="col-md-10 col-sm-10 ">
+                                            <select class="form-control has-feedback-left" id="positionType" placeholder="">
+                                                <option>Front-End</option>
+                                                <option>Back-End</option>
+                                                <option>Full-Stack</option>
+                                                <option>Android</option>
+                                                <option>IOS</option>
+                                                <option>Python</option>
+                                                <option>PHP(Laravel)</option>
+                                                <option>Node.js</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2 ">Position Level<span class="required">*</span></label>
+                                        <div class="col-md-10 col-sm-10 ">
+                                            <select class="form-control has-feedback-left" id="positionLevel" placeholder="">
+                                                <option>Junior</option>
+                                                <option>Intermediate</option>
+                                                <option>Senior</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2 ">Job Description<span class="required">*</span></label>
+                                        <div class="col-md-10 col-sm-10 ">
+                                            <textarea type="text" id="jobDescription" class="form-control" placeholder="Describe the job here . . ."></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="ln_solid"></div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            <button type="submit" style="float:right" class="btn btn-success">Post</button>
+                                            <button class="btn btn-secondary" style="float:right" type="reset">Reset</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade bs-example-modal-lg" id="editJobPostModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="myEditModalLabel">Edit Job Post</h6>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Ad details <small>Please fill the details</small></h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#">Settings 1</a>
+                                            <a class="dropdown-item" href="#">Settings 2</a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <br />
+                                <form id="frmEditAd" method="post" class="form-label-left input_mask">
+                                    <input id="editId" hidden type="text" />
+                                    <div class="col-md-6 col-sm-6  form-group has-feedback">
+                                        <input type="text" class="form-control has-feedback-left" id="editjobTitle" placeholder="Job Title">
+                                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6  form-group has-feedback">
+                                        <input type="number" class="form-control" id="editnofvacancies" placeholder="No. of Vacancies">
+                                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2 ">Job Timings<span class="required">*</span></label>
+                                        <div class="col-sm-5 form-group has-feedback">
+                                            <small>From</small>
+                                            <div class="form-group">
+                                                <div class="input-group date" id='myDatepicker4'>
+                                                    <input type="text" disabled value="09:00 AM" id="editfrom" class="form-control" />
+                                                    <span class="input-group-addon" style="cursor:pointer">
+                                                        <span class="fa fa-clock-o"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <small>To</small>
+                                            <div class="form-group">
+                                                <div class="input-group date" id="secondmyDatepicker4">
+                                                    <input type='text' disabled value="05:30 PM" id="editto" class="form-control" />
+                                                    <span class="input-group-addon" style="cursor:pointer">
+                                                        <span class="fa fa-clock-o"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2 ">Job Type<span class="required">*</span></label>
+                                        <div class="col-md-10 col-sm-10 ">
+                                            <select class="form-control has-feedback-left" id="editpositionType" placeholder="">
+                                                <option>Front-End</option>
+                                                <option>Back-End</option>
+                                                <option>Full-Stack</option>
+                                                <option>Android</option>
+                                                <option>IOS</option>
+                                                <option>Python</option>
+                                                <option>PHP(Laravel)</option>
+                                                <option>Node.js</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2 ">Position Level<span class="required">*</span></label>
+                                        <div class="col-md-10 col-sm-10 ">
+                                            <select class="form-control has-feedback-left" id="editpositionLevel" placeholder="">
+                                                <option>Junior</option>
+                                                <option>Intermediate</option>
+                                                <option>Senior</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-md-2 col-sm-2 ">Job Description<span class="required">*</span></label>
+                                        <div class="col-md-10 col-sm-10 ">
+                                            <textarea type="text" id="editjobDescription" class="form-control" placeholder="Describe the job here . . ."></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="ln_solid"></div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            <button type="button" style="float:right" class="btn btn-success" onclick="saveChanges()">Save</button>
+                                            <button class="btn btn-secondary" style="float:right" type="reset">Reset</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="imgZoomDiv row" id="ImgZoomDiv">
+            <p style="font-size: 25pt; text-align: right;cursor:pointer" onclick="closeImageZoom()"><i class="fa fa-close"></i></p>
+            <div class="imgContainer" id="ImgContainer">
+
+            </div>
+        </div>
+    </div>
+    <script src="~/Assets/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/Assets/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/Assets/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="~/Assets/vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="~/Assets/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="~/Assets/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="~/Assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="~/Assets/vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="~/Assets/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="~/Assets/vendors/Flot/jquery.flot.js"></script>
+    <script src="~/Assets/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="~/Assets/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="~/Assets/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="~/Assets/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="~/Assets/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="~/Assets/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="~/Assets/vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="~/Assets/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="~/Assets/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="~/Assets/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="~/Assets/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="~/Assets/vendors/moment/min/moment.min.js"></script>
+    <script src="~/Assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="~/Assets/vendors/moment/min/moment.min.js"></script>
+    <script src="~/Assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap-datetimepicker -->
+    <script src="~/Assets/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/Assets/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="~/Assets/vendors/nprogress/nprogress.js"></script>
+    <!-- iCheck -->
+    <script src="~/Assets/vendors/iCheck/icheck.min.js"></script>
+    <!-- Datatables -->
+    <!--<script src="~/Assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/Assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="~/Assets/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/Assets/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/Assets/vendors/pdfmake/build/vfs_fonts.js"></script>-->
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="~/Assets/build/js/custom.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script type="text/javascript">
+        $(function () {
+            $('#myDatepicker').datetimepicker();
+        });
+
+        $('#myDatepicker2').datetimepicker({
+            format: 'DD.MM.YYYY'
+        });
+
+        $('#myDatepicker3').datetimepicker({
+            format: 'hh:mm A'
+        });
+        $('#secondmyDatepicker3').datetimepicker({
+            format: 'hh:mm A'
+        });
+        $('#myDatepicker4').datetimepicker({
+            ignoreReadonly: true,
+            allowInputToggle: true
+        });
+
+        $('#datetimepicker6').datetimepicker();
+
+        $('#datetimepicker7').datetimepicker({
+            useCurrent: false
+        });
+
+        $("#datetimepicker6").on("dp.change", function (e) {
+            $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+        });
+
+        $("#datetimepicker7").on("dp.change", function (e) {
+            $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+        });
+    </script>
+    <script>
+        $(document).ready(() => {
+            if (window.location.href.includes("/Home/HomePage#"))
+                document.getElementById("jobChild").style.display = "block";
+            $("#content").hide();
+            $("#ImgZoomDiv").hide();
+            $("#main").show();
+            getTotalAdsCount();
+            getActiveAdsCount();
+            setInterval(getTimer, 1000);
+            //getTimer();
+        });
+        function getTimer() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Content("~/api/UserAuth/getTimer")',
+                success: function (data) {
+                    $("#timer").html(data);
+                }
+            });
+        }
+        function getTotalAdsCount() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Content("~/api/UserAuth/getTotalAds")',
+                success: function (data) {
+                    $("#totalAds").html(data);
+                }
+            });
+        }
+        function getActiveAdsCount() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Content("~/api/UserAuth/getActiveAds")',
+                success: function (data) {
+                    $("#activeAds").html(data);
+                }
+            });
+        }
+        function closeTable() {
+            $("#content").hide();
+            $("#main").show();
+        }
+        $("#frmPostAd").submit(function (e) {
+            e.preventDefault();
+            var job_entity = {};
+            job_entity.jobTitle = $("#jobTitle").val();
+            job_entity.starttime = $("#from").val();
+            job_entity.endtime = $("#to").val();
+            job_entity.nofvacancies = $("#nofvacancies").val();
+            job_entity.jobType = $("#positionType option:selected").val();
+            job_entity.jobLevel = $("#positionLevel option:selected").val();
+            job_entity.description = $("#jobDescription").val();
+            console.log(job_entity);
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/api/UserAuth/postJobAd")',
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    title: job_entity.jobTitle,
+                    vacancies: job_entity.nofvacancies,
+                    starttime: job_entity.starttime,
+                    endtime: job_entity.endtime,
+                    type: job_entity.jobType,
+                    level: job_entity.jobLevel,
+                    description: job_entity.description
+                }),
+                success: function (data) {
+                    if (data) {
+                        {
+                            $('#postJobModal').modal('toggle');
+                            swal({
+                                title: "Success!",
+                                text: "Job Posted Successfully!",
+                                icon: "success",
+                            });
+                        }
+                    }
+                    else {
+                        swal({
+                            icon: 'Error!',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                            footer: '<a href="">Why do I have this issue?</a>'
+                        })
+                    }
+                }
+            });
+        });
+        function getActiveJobAds() {
+            var HTML = '';
+            $("#tbl_Heading").html("Active Job Ads");
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Content("~/api/UserAuth/getActiveJobAds")',
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        HTML += '<tr>';
+                        HTML += '<td><input type="checkbox"></td>';
+                        HTML += '<td>' + data[i].title + '</td>';
+                        HTML += '<td>' + data[i].vacancies + '</td>';
+                        HTML += '<td>' + data[i].type+ '</td>';
+                        HTML += '<td>' + data[i].level+ '</td>';
+                        HTML += '<td>' + data[i].description + '</td>';
+                        HTML += '<td>From : <strong>' + data[i].starttime + '</strong>  To : <strong>' + data[i].endtime +'</strong></td>';
+                        HTML += '<td>' + data[i].postTime + '</td>';
+                        HTML += '<td style="min-width: 110px;font-size: 15pt;"><span title="Deactivate" style="cursor:pointer" onclick="deActivateAd(`' + data[i].id +'`)"><i class="fa fa-fw fa-ban"></i></span>';
+                        HTML += '<span style="cursor:pointer" title="Edit Post" data-toggle="modal" data-target="#editJobPostModal"';
+                        HTML += 'onclick = "fillModal(`' + data[i].id + '`,`' + data[i].title + '`,`' + data[i].vacancies + '`,`' + data[i].description + '`,`' + data[i].starttime + '`,`' + data[i].endtime + '`)"><i class="fa fa-fw fa-pencil">';
+                        HTML += '</i></span><span title="Delete Post" onclick="deletePost(`' + data[i].id +'`)" style="cursor:pointer"><i class="fa fa-fw fa-trash-o"></i></span></td>';
+                        HTML += '</tr>';
+                    }
+                    $("#main").hide();
+                    $("#adStatusCol").hide();
+                    $("#col-Actions").show();
+                    $("#content").show();
+                    $("#tbl_body").html(HTML);
+                }
+            });
+        }
+        function getJobAdsHistory() {
+            var HTML = '';
+            $("#tbl_Heading").html("Post History");
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Content("~/api/UserAuth/getJobAdsHistory")',
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        HTML += '<tr>';
+                        HTML += '<td><input type="checkbox"></td>';
+                        HTML += '<td>' + data[i].title + '</td>';
+                        HTML += '<td>' + data[i].vacancies + '</td>';
+                        HTML += '<td>' + data[i].type + '</td>';
+                        HTML += '<td>' + data[i].level + '</td>';
+                        HTML += '<td>' + data[i].description + '</td>';
+                        HTML += '<td style="width: 130px;">From : <strong>' + data[i].starttime + '</strong>  To : <strong>' + data[i].endtime + '</strong></td>';
+                        HTML += '<td>' + data[i].postTime + '</td>';
+                        if (data[i].status == 'Active')
+                            HTML += '<td><span class="btn btn-sm btn-success" title="De-activate" onclick = "deActivateAd(`' + data[i].id +'`)">' + data[i].status + '</span></td>';
+                        else
+                            HTML += '<td><span class="btn btn-sm btn-secondary" title="Activate" onclick = "reActivateAd(`'+data[i].id+'`)">' + data[i].status + '</span></td>';
+
+                        HTML += '<td><span title="Delete Post" onclick="deletePost(`'+data[i].id+'`)" style="cursor:pointer;font-size: 15pt;"><i class="fa fa-fw fa-trash-o"></i></span></td>';
+                        HTML += '</tr>';
+                    }
+                    $("#main").hide();
+                    $("#adStatusCol").show();
+                    //$("#col-Actions").hide();
+                    $("#content").show();
+                    $("#tbl_body").html(HTML);
+                }
+            });
+        }
+        function fillModal(id, title, vacancies, description, starttime, endtime) {
+            $("#editId").val(id);
+            $("#editjobTitle").val(title);
+            $("#editnofvacancies").val(vacancies);
+            $("#editjobDescription").val(description);
+            $("#editfrom").val("09:00 AM");
+            $("#editto").val("05:30 PM");
+        }
+        function saveChanges() {
+            var job_entity = {};
+            job_entity.id = $("#editId").val();
+            job_entity.jobTitle = $("#editjobTitle").val();
+            job_entity.starttime = $("#editfrom").val();
+            job_entity.endtime = $("#editto").val();
+            job_entity.nofvacancies = $("#editnofvacancies").val();
+            job_entity.jobType = $("#editpositionType option:selected").val();
+            job_entity.jobLevel = $("#editpositionLevel option:selected").val();
+            job_entity.description = $("#editjobDescription").val();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/api/UserAuth/saveChanges")',
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    id: job_entity.id,
+                    title: job_entity.jobTitle,
+                    vacancies: job_entity.nofvacancies,
+                    starttime: job_entity.starttime,
+                    endtime: job_entity.endtime,
+                    type: job_entity.jobType,
+                    level: job_entity.jobLevel,
+                    description: job_entity.description
+                }),
+                success: function (data) {
+                    if (data) {
+                        {
+                            $('#editJobPostModal').modal('toggle');
+                            getActiveJobAds();
+                            swal({
+                                title: "Success!",
+                                text: "Changes Saved !",
+                                icon: "success",
+                            });
+                        }
+                    }
+                    else {
+                        swal({
+                            icon: 'Error!',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                            footer: '<a href="">Why do I have this issue?</a>'
+                        })
+                    }
+                }
+            });
+        }
+        function deActivateAd(id) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/api/UserAuth/deActivateAd")',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({
+                    id:id
+                }),
+                success: function (data) {
+                    if (data) {
+                        {
+                            getTotalAdsCount();
+                            getActiveAdsCount();
+                            swal({
+                                title: "Success!",
+                                text: "Ad deactivated!",
+                                icon: "success",
+                            });
+                            getActiveJobAds();
+                        }
+                    }
+                    else {
+                        swal({
+                            icon: 'Error!',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                            footer: '<a href="">Why do I have this issue?</a>'
+                        })
+                    }
+                }
+            });
+        }
+        function reActivateAd(id) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/api/UserAuth/reActivateAd")',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({
+                    id:id
+                }),
+                success: function (data) {
+                    if (data) {
+                        {
+                            getTotalAdsCount();
+                            getActiveAdsCount();
+                            swal({
+                                title: "Success!",
+                                text: "Ad Activated !",
+                                icon: "success",
+                            });
+                            getJobAdsHistory();
+                        }
+                    }
+                    else {
+                        swal({
+                            icon: 'Error!',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                            footer: '<a href="">Why do I have this issue?</a>'
+                        })
+                    }
+                }
+            });
+        }
+        function deletePost(id) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/api/UserAuth/deletePost")',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({
+                    id:id
+                }),
+                success: function (data) {
+                    if (data) {
+                        {
+                            getTotalAdsCount();
+                            getActiveAdsCount();
+                            swal({
+                                title: "Success!",
+                                text: "Deleted Successfully !",
+                                icon: "success",
+                            });
+                            getJobAdsHistory();
+                        }
+                    }
+                    else {
+                        swal({
+                            icon: 'Error!',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                            footer: '<a href="">Why do I have this issue?</a>'
+                        })
+                    }
+                }
+            });
+        }
+        function navigate() {
+            if (!window.location.href.includes("/Home/Products"))
+                window.location.href = "/Home/Products";
+        }
+        function navigateToJobs() {
+            if (!window.location.href.includes("/Home/HomePage"))
+                window.location.href = "/Home/HomePage#";
+        }
+    </script>
+</body>
+</html>

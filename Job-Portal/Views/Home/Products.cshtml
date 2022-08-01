@@ -1,0 +1,475 @@
+﻿@{
+    ViewData["Title"] = "SmartCoders-Products";
+}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3><small></small></h3>
+            </div>
+
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-secondary" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Products <small>by <strong>Smart-Coders</strong></small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                </div>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box table-responsive">
+                                    <table id="datatable" class="table table-striped table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Url</th>
+                                                <th>Tools</th>
+                                                <th>Tech</th>
+                                                <th>Description</th>
+                                                <th>Image</th>
+                                                <th>Published On</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblProductsBody">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="width:50%" class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-body">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="x_panel" style="min-height:90vh">
+                    <div class="x_title">
+                        <h2>Add a new Product<small>sub title</small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <form class="" id="addProductForm" method="post" novalidate style="margin: 25px;">
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3  label-align">Project Title<span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-8">
+                                    <input type="text" class="form-control" id="pTitle" name="name" placeholder="ex. Job Portal" required="required" />
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3  label-align">Project URL<span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-8">
+                                    <input type="text" class="form-control" id="pUrl" name="url" placeholder="ex. https://www.example.com/" required="required" />
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3  label-align">Tools<span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-8">
+                                    <input class="form-control" class='optional' id="tools" name="tools" type="text" />
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3  label-align">Technologies<span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-8">
+                                    <input class="form-control" name="tech" id="tech" class='email' required="required" type="text" />
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3  label-align">Image<span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-8">
+                                    <img id="uploadedFile" src="#" alt="your image" />
+                                    <input class="form-control" onchange="readURL(this);" name="image" accept="image/gif, image/jpeg, image/png" id="imageInput" required="required" type="file" />
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3  label-align">Description<span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-8">
+                                    <textarea class="form-control" placeholder="Briefly describe the project here . . ." required="required" name='desc' id="desc"></textarea>
+                                </div>
+                            </div>
+                            <div class="ln_solid">
+                                <div class="form-group" style="padding:10px">
+                                    <div class="col-md-8" style="float:right">
+                                        <button type="submit" style="float:right" class="btn btn-primary">Submit</button>
+                                        <button type="reset" style="float:right" class="btn btn-success" onclick="resetFile()">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="width:50%" class="offcanvas offcanvas-end" tabindex="-1" id="editProductDetails" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-body">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="x_panel" style="min-height:90vh">
+                    <div class="x_title">
+                        <h2>Edit Product<small>Details</small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Settings 1</a>
+                                    <a class="dropdown-item" href="#">Settings 2</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <form class="" id="editProductForm" method="post" novalidate style="margin: 25px;">
+                            <input type="text" id="epId" hidden/>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3  label-align">Project Title<span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-8">
+                                    <input type="text" class="form-control" id="epTitle" name="name" placeholder="ex. Job Portal" required="required" />
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3  label-align">Project URL<span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-8">
+                                    <input type="text" class="form-control" id="epUrl" name="url" placeholder="ex. https://www.example.com/" required="required" />
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3  label-align">Tools<span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-8">
+                                    <input class="form-control" class='optional' id="etools" name="tools" type="text" />
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3  label-align">Technologies<span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-8">
+                                    <input class="form-control" name="tech" id="etech" class='email' required="required" type="text" />
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3  label-align">Image<span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-8">
+                                    <img id="euploadedFile" src="#" alt="your image" />
+                                    <input class="form-control" name="image" accept="image/gif, image/jpeg, image/png" id="eimageInput" required="required" type="file" />
+                                </div>
+                            </div>
+                            <div class="field item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3  label-align">Description<span class="required">*</span></label>
+                                <div class="col-md-8 col-sm-8">
+                                    <textarea class="form-control" placeholder="Briefly describe the project here . . ." required="required" name='desc' id="edesc"></textarea>
+                                </div>
+                            </div>
+                            <div class="ln_solid">
+                                <div class="form-group" style="padding:10px">
+                                    <div class="col-md-8" style="float:right">
+                                        <button type="submit" style="float:right" class="btn btn-primary">Submit</button>
+                                        <button type="reset" style="float:right" class="btn btn-success" onclick="resetFile()">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Assets/vendors/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(() => {
+        $("#ImgZoomDiv").hide();
+        $("#uploadedFile").hide();
+        document.getElementById("prodChild").style.display = "block";
+    });
+    function resetFile() {
+        $('#uploadedFile').attr('src', '#');
+        $("#uploadedFile").hide();
+    }
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#uploadedFile').attr('src', e.target.result).width(150).height(150);
+            };
+            reader.readAsDataURL(input.files[0]);
+            $("#uploadedFile").show();
+        }
+    }
+    function sendData() {
+        var uploadFile = $("#imageInput").get(0);
+        var imageName = document.getElementById("imageInput").value;
+        var temp = imageName.split("\\");
+        imageName = temp[parseInt(temp.length) - 1];
+        var files = uploadFile.files;
+        var fileData = new FormData();
+        var KeyValue = 1;
+        for (var i = 0; i < files.length; i++, KeyValue++) {
+            fileData.append(imageName, files[parseInt(files.length) - 1]);
+        }
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/api/UserAuth/imageSaver")',
+            contentType: false, // Not to set any content header
+            processData: false,
+            data: fileData,
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    }
+    $("#addProductForm").submit(function (e) {
+        e.preventDefault();
+        var product_entity = {};
+        product_entity.productTitle = $("#pTitle").val();
+        product_entity.url = $("#pUrl").val();
+        product_entity.tools = $("#tools").val();
+        product_entity.tech = $("#tech").val();
+        product_entity.description = $("#desc").val();
+        product_entity.image = document.getElementById("imageInput").value;
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/api/UserAuth/postNewProduct")',
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({
+                productTitle: product_entity.productTitle,
+                url: product_entity.url,
+                tools: product_entity.tools,
+                tech: product_entity.tech,
+                desc: product_entity.description,
+                image: product_entity.image
+            }),
+            success: function (data) {
+                if (data) {
+                    {
+                        // $('#postJobModal').modal('toggle');
+                        swal({
+                            title: "Success!",
+                            text: "Product Added Successfully!",
+                            icon: "success",
+                        });
+                    }
+                }
+                else {
+                    swal({
+                        icon: 'Error!',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: '<a href="">Why do I have this issue?</a>'
+                    })
+                }
+            }
+        });
+        sendData();
+    });
+    function getAllProducts() {
+        var HTML = '';
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Content("~/api/UserAuth/getAllProducts")',
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    HTML += '<tr>';
+                    HTML += '<td>' + data[i].productTitle+'</td>';
+                    HTML += '<td>' + data[i].url+'</td>';
+                    HTML += '<td>' + data[i].tools+'</td>';
+                    HTML += '<td>' + data[i].tech+'</td>';
+                    HTML += '<td>' + data[i].desc+'</td>';
+                    HTML += '<td style="cursor:pointer" onclick="viewImage(`' + data[i].image +'`)"><img src="/Uploads/' + data[i].image+'" width="50" height="50"/></td>';
+                    HTML += '<td>' + data[i].addedOn+'</td>';
+                    HTML += '<td style="font-size:14pt"><span style="cursor:pointer" title="Edit Post" data-bs-toggle="offcanvas" data-bs-target="#editProductDetails" aria-controls="offcanvasRight" ';
+                    HTML += 'onclick = "fillCanvas(`' + data[i].id + '`,`' + data[i].productTitle + '`,`' + data[i].url + '`,`' + data[i].tools+ '`,`' + data[i].tech+ '`,`' + data[i].desc+'`,`'+data[i].image+'`)"><i class="fa fa-fw fa-pencil">';
+                    HTML += '</i></span><span title="Delete Post" onclick="deleteProduct(`' + data[i].id + '`)" style="cursor:pointer"><i class="fa fa-fw fa-trash-o"></i></span></td>';
+                    HTML += '</tr>';
+                }
+                $("#tblProductsBody").html(HTML);
+            }
+        });
+    }
+    function fillCanvas(id, productTitle, url, tools, tech, desc, image) {
+        $("#epId").val(id);
+        $("#epTitle").val(productTitle);
+        $("#epUrl").val(url);
+        $("#etools").val(tools);
+        $("#etech").val(tech);
+        $("#edesc").val(desc);
+        //$("#eimageInput").val(image);
+        $("#euploadedFile").attr("src", "/Uploads/" + image);
+        document.getElementById("euploadedFile").style.width = "100px";
+        document.getElementById("euploadedFile").style.height = "100px";
+        document.getElementById("euploadedFile").style.margin = "10px";
+    }
+    $("#editProductDetails").submit(function (e) {
+        e.preventDefault();
+        var product_entity = {};
+        product_entity.productTitle = $("#epTitle").val();
+        product_entity.id = $("#epId").val();
+        product_entity.url = $("#epUrl").val();
+        product_entity.tools = $("#etools").val();
+        product_entity.tech = $("#etech").val();
+        product_entity.description = $("#edesc").val();
+        product_entity.image = document.getElementById("eimageInput").value;
+        console.log(product_entity);
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/api/UserAuth/editProduct")',
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({
+                id: product_entity.id,
+                productTitle: product_entity.productTitle,
+                url: product_entity.url,
+                tools: product_entity.tools,
+                tech: product_entity.tech,
+                desc: product_entity.description,
+                image: product_entity.image
+            }),
+            success: function (data) {
+                if (data) {
+                    {
+                        getAllProducts();
+                        swal({
+                            title: "Success!",
+                            text: "Changes Saved!",
+                            icon: "success",
+                        });
+                    }
+                }
+                else {
+                    swal({
+                        icon: 'Error!',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: '<a href="">Why do I have this issue?</a>'
+                    })
+                }
+            }
+        });
+        sendEditData();
+    });
+    function sendEditData() {
+        var uploadFile = $("#eimageInput").get(0);
+        var imageName = document.getElementById("eimageInput").value;
+        var temp = imageName.split("\\");
+        imageName = temp[parseInt(temp.length) - 1];
+        var files = uploadFile.files;
+        var fileData = new FormData();
+        var KeyValue = 1;
+        for (var i = 0; i < files.length; i++, KeyValue++) {
+            fileData.append(imageName, files[parseInt(files.length) - 1]);
+        }
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/api/UserAuth/imageSaver")',
+            contentType: false, // Not to set any content header
+            processData: false,
+            data: fileData,
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    }
+    function viewImage(image) {
+        var HTML = '';
+        HTML += '<img height="500" width="500" src="/Uploads/' + image + '"/>';
+        document.getElementById("mainContainer").style.filter = "blur(8px)";
+        document.getElementById("ImgZoomDiv").style.transitionDuration = "1s";
+        document.getElementById("ImgZoomDiv").style.width = "100%";
+        document.getElementById("ImgContainer").style.width = "100%";
+        document.getElementById("ImgZoomDiv").style.height = "100vh";
+        document.getElementById("ImgContainer").style.height = "100vh";
+        $("#ImgContainer").html(HTML);
+        $("#ImgZoomDiv").show();
+    }
+    function closeImageZoom() {
+        var HTML = '';
+        document.getElementById("mainContainer").style.filter = "blur(0px)";
+        document.getElementById("ImgZoomDiv").style.width = "0%";
+        document.getElementById("ImgContainer").style.width = "0%";
+        document.getElementById("ImgZoomDiv").style.height = "0vh";
+        document.getElementById("ImgContainer").style.height = "0vh";
+        $("#ImgContainer").html(HTML);
+        $("#ImgZoomDiv").hide();
+    }
+    function deleteProduct(pId) {
+        $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/api/UserAuth/deleteProduct")',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({
+                    id:pId
+                }),
+                success: function (data) {
+                    if (data) {
+                        {
+                            getAllProducts();
+                            swal({
+                                title: "Success!",
+                                text: "Deleted Successfully !",
+                                icon: "success",
+                            });
+                        }
+                    }
+                    else {
+                        swal({
+                            icon: 'Error!',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                            footer: '<a href="">Why do I have this issue?</a>'
+                        })
+                    }
+                }
+            });
+    }
+</script>
